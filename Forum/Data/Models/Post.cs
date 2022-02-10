@@ -19,6 +19,10 @@ namespace Forum.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(200)]
+        public string Title { get; set; }
+
+        [Required]
         [MaxLength(5000)]
         public string Contents { get; set; }
 
