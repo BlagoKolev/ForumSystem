@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220211134736_CreateCategoryTables")]
+    [Migration("20220211141802_CreateCategoryTables")]
     partial class CreateCategoryTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,7 +150,9 @@ namespace Forum.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ParentCategoryId")
                         .HasColumnType("int");
