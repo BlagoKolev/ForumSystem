@@ -1,8 +1,14 @@
-﻿@{
+﻿@model List<Forum.Data.Models.Category>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to My Forum</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Your Fitness Forum</h1>
+    <p>Now we have @Model.Count()  active categories </p>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <h3> @Model[i].Name</h3>
+    }
 </div>

@@ -29,6 +29,10 @@ namespace Forum.Data.Models
         public virtual IdentityUser Creator { get; set; }
         public string CreatorId { get; set; }
 
+        public Category Category { get; set; }
+
+        public int CategoryId { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
