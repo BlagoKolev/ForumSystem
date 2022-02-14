@@ -1,4 +1,4 @@
-﻿@model List<Forum.Data.Models.Category>
+﻿@model List<HomeCategoriesViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,8 +7,18 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to Your Fitness Forum</h1>
     <p>Now we have @Model.Count()  active categories </p>
-    @for (int i = 0; i < Model.Count; i++)
+    @*@for (int i = 0; i < Model.Count; i++)
+        {
+            <h3> @Model[i].Name</h3>
+        }*@
+   
+    @foreach (var mainCategory in Model)
     {
-        <h3> @Model[i].Name</h3>
+        <h3> @mainCategory.CategoryName </h3>
+
+        foreach (var subCategory in mainCategory.SubCategories)
+        {
+            <h5><a href="">@subCategory.Name</a></h5>
+        }
     }
 </div>

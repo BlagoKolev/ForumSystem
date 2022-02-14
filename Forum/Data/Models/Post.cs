@@ -25,16 +25,12 @@ namespace Forum.Data.Models
         [Required]
         [MaxLength(5000)]
         public string Contents { get; set; }
-
         public virtual IdentityUser Creator { get; set; }
         public string CreatorId { get; set; }
-
         public Category Category { get; set; }
-
         public int CategoryId { get; set; }
-
+        public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

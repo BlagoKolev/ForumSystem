@@ -21,16 +21,11 @@ namespace Forum.Data.Models
         [Required]
         [MaxLength(5000)]
         public string Contents { get; set; }
-
-        
         public virtual Post Post { get; set; }
         public int PostId { get; set; }
-
-     
         public IdentityUser Creator { get; set; }
-
         public string CreatorId { get; set; }
-
+        public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }

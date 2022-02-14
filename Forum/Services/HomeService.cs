@@ -1,5 +1,6 @@
 ﻿using Forum.Data;
 using Forum.Data.Models;
+using Forum.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,21 @@ namespace Forum.Services
         {
             this.db = db;
         }
-        public List<Category> GetCategories()
+        public List<HomeCategoriesViewModel> GetCategories()
         {
-            return this.db.Categories.ToList();
+            var categories = this.db.Categories
+                .Where(c=>!c.IsDeleted)
+                .Select(c => new HomeCategoriesViewModel
+                {
+                    CategoryName = c.Name,
+                    SubCategories = c.SubCategories
+                   .OrderBy(c => c.Name.Length)
+                   .ToList()
+                })
+                .ToList();
+
+
+            return categories;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Forum.Data.Models;
+using Forum.Models.Home;
 
 namespace Forum.Services
 {
     public interface IHomeService
     {
-        List<Category> GetCategories();
+        List<HomeCategoriesViewModel> GetCategories();
     }
 }
