@@ -1,0 +1,12 @@
+﻿/*My Custom site CSS*/
+
+.home-category-container {
+    display: flex;
+    flex-direction:column;
+}
+
+.home-main-category {
+    display: flex;
+    flex-direction: column;
+    background-color: brown;
+}
