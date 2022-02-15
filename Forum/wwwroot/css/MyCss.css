@@ -20,7 +20,7 @@ body {
     margin-bottom: 40px;
 }
 
-.home-page-text {
+.home-page-text, text-white {
     color: azure;
 }
 
@@ -31,3 +31,4 @@ body {
 a {
     text-decoration: none !important;
 }
+

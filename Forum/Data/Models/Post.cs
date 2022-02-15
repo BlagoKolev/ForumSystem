@@ -27,8 +27,8 @@ namespace Forum.Data.Models
         public string Contents { get; set; }
         public virtual IdentityUser Creator { get; set; }
         public string CreatorId { get; set; }
-        public Category Category { get; set; }
-        public int CategoryId { get; set; }
+        public SubCategory SubCategory { get; set; }
+        public int SubCategoryId { get; set; }
         public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

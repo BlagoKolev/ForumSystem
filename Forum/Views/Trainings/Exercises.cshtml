@@ -1,1 +1,40 @@
-﻿<h3> Exercises </h3>
+﻿@model List<AllTrainingsPostsViewModel>
+
+<div class="training-container">
+
+    <h3 class="text-white"> Exercises </h3>
+
+    <table class="table table-dark table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Content</th>
+                <th scope="col">Published by</th>
+                <th scope="col">Published on</th>
+            </tr>
+        </thead>
+        @foreach (var post in Model)
+        {
+            var postContent = post.Contents;
+
+            if (post.Contents.Length > 150)
+            {
+                postContent = post.Contents.Substring(0, 150) + " ...";
+            }
+            <tr>
+                <td>
+                    <a href="" class="text-white">@post.Title</a>
+                </td>
+                <td>
+                    <a href="" class="text-white">@postContent</a>
+                </td>
+                <td>
+                    <a class="text-white">@post.Creator</a>
+                </td>
+                <td>
+                    <a class="text-white">@post.PublishedOn</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
