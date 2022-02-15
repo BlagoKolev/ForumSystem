@@ -5,19 +5,28 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Your Fitness Forum</h1>
-    <p>Now we have @Model.Count()  active categories </p>
+    <h1 class="display-4 home-page-text">Welcome to Your Fitness Forum</h1>
+    <p class="home-page-text">Now we have @Model.Count()  active categories </p>
 
     <div class="home-category-container">
         @foreach (var mainCategory in Model)
         {
             <div class="home-main-category">
-                <h3 class=""> @mainCategory.CategoryName </h3>
+                <h3 class="home-page-text"> @mainCategory.CategoryName </h3>
 
-                @foreach (var subCategory in mainCategory.SubCategories)
-                {
-                    <h5><a href="">@subCategory.Name</a></h5>
-                }
+                <table class="table table-dark home-table">
+                    @foreach (var subCategory in mainCategory.SubCategories)
+                    {
+
+
+                        <tr class="home-table-row">
+                            <td class="home-table-subCategory">
+                                <h5><a class="home-subCategory-text" href="/@mainCategory.CategoryName/@subCategory.Name ">@subCategory.Name</a></h5>
+                            </td>
+                        </tr>
+
+                    }
+                </table>
             </div>
         }
     </div>

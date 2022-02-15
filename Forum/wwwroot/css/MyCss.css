@@ -1,6 +1,6 @@
 ﻿/*My Custom site CSS*/
 
-.home-category-container {
+/*.home-category-container {
     display: flex;
     flex-direction:column;
 }
@@ -9,4 +9,25 @@
     display: flex;
     flex-direction: column;
     background-color: brown;
+}
+*/
+
+body {
+    background-color: black;
+}
+
+.home-table {
+    margin-bottom: 40px;
+}
+
+.home-page-text {
+    color: azure;
+}
+
+.home-table-subCategory {
+    text-align: left;
+}
+
+a {
+    text-decoration: none !important;
 }
