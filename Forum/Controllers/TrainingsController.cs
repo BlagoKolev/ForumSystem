@@ -15,16 +15,48 @@ namespace Forum.Controllers
         public IActionResult Exercises()
         {
             string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-
             var posts = this.trainingService.GetAllPosts(actionName);
-
             return View(posts);
         }
 
         [ActionName("Street Fitness")]
         public IActionResult StreetFitness()
         {
-            return View();
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var posts = trainingService.GetAllPosts(actionName);
+            return View(posts);
+        }
+
+        [ActionName("Injuries and Health problems")]
+        public IActionResult Injuries()
+        {
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var posts = trainingService.GetAllPosts(actionName);
+            return View(posts);
+        }
+
+        [ActionName("Weight loss training programs")]
+        public IActionResult WeightLoss()
+        {
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var posts = trainingService.GetAllPosts(actionName);
+            return View(posts);
+        }
+
+        [ActionName("Trainings - Common discussions")]
+        public IActionResult CommonDiscussions()
+        {
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var posts = trainingService.GetAllPosts(actionName);
+            return View(posts);
+        }
+
+        [ActionName("Мuscle mass increase training programs")]
+        public IActionResult MuscleMass()
+        {
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var posts = trainingService.GetAllPosts(actionName);
+            return this.View(posts);
         }
     }
 }

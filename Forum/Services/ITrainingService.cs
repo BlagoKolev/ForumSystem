@@ -1,5 +1,5 @@
 ﻿using Forum.Data.Models;
-using Forum.Models.Trainings;
+using Forum.Models.SubCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Forum.Services
 {
     public interface ITrainingService
     {
-        ICollection<AllTrainingsPostsViewModel> GetAllPosts(string actionName);
+        ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName);
     }
 }

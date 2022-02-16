@@ -1,6 +1,6 @@
 ﻿using Forum.Data;
 using Forum.Data.Models;
-using Forum.Models.Trainings;
+using Forum.Models.SubCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +16,12 @@ namespace Forum.Services
         {
             this.db = db;
         }
-        public ICollection<AllTrainingsPostsViewModel> GetAllPosts(string actionName)
+        public ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName)
         {
             var allPosts = this.db.Posts
                  .Where(x => !x.IsDeleted)
                  .Where(x=>x.SubCategory.Name == actionName)
-                 .Select(x => new AllTrainingsPostsViewModel
+                 .Select(x => new SubCategoryAllPostsViewModel
                  {
                      Id = x.Id,
                      Title = x.Title,

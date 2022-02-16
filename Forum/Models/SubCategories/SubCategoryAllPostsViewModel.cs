@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Forum.Models.Trainings
+namespace Forum.Models.SubCategories
 {
-    public class AllTrainingsPostsViewModel
+    public class SubCategoryAllPostsViewModel
     {
-        public AllTrainingsPostsViewModel()
+        public SubCategoryAllPostsViewModel()
         {
             this.Comments = new HashSet<Comment>();
         }
