@@ -14,7 +14,33 @@
 
 body {
     background-color: black;
+  /*  display: flex;
+    flex-direction: column;
+    align-items: center;*/
+    /* background-image: url("../images/training.jpg") ;*/
 }
+
+/*header {
+    width: 100%;
+}
+*/
+/*.container {
+    display: flex;
+    min-width: 100%;
+    margin: 0;
+    justify-content: center;
+}*/
+
+/*main {
+    display: flex;
+    justify-content: center;
+}*/
+/*
+.training-container {
+    display: flex;
+    background-image: url("../images/training.jpg");
+    width: 80%;
+}*/
 
 .home-table {
     margin-bottom: 40px;
@@ -31,4 +57,5 @@ body {
 a {
     text-decoration: none !important;
 }
+
 
