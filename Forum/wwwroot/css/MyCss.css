@@ -61,3 +61,7 @@ a {
 a:hover {
     color: orangered !important;
 }
+
+.subcategory-title {
+    margin-top: 50px !important;
+}
