@@ -39,8 +39,8 @@ namespace Forum.Helper
             {
                 db.Categories.Add(new Category { Name = "Trainings" });
                 db.Categories.Add(new Category { Name = "Nutrition" });
-                db.Categories.Add(new Category { Name = "Nutritional Supplements" });
-                db.Categories.Add(new Category { Name = "Anabolic Steroids and Prohibited Substances" });
+                db.Categories.Add(new Category { Name = "Nutritional supplements" });
+                db.Categories.Add(new Category { Name = "Anabolic steroids and prohibited substances" });
 
                 db.SaveChanges();
             }
@@ -74,7 +74,7 @@ namespace Forum.Helper
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Injuries and Health problems",
+                    Name = "Injuries and health problems",
                     ParentCategoryId = 1
                 });
 
@@ -86,7 +86,7 @@ namespace Forum.Helper
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Trainings - Common discussions",
+                    Name = "Common discussions",
                     ParentCategoryId = 1
                 });
 
@@ -105,51 +105,51 @@ namespace Forum.Helper
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Nutrition - Common discussions",
+                    Name = "Common discussions",
                     ParentCategoryId = 2
                 });
 
                 //Nutritional supplements
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Supplements to increase muscle mass and strength",
+                    Name = "Increase muscle mass and strength",
                     ParentCategoryId = 3
                 });
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Supplements to weight loss and fat reduction",
+                    Name = "Weight loss and fat reduction",
                     ParentCategoryId = 3
                 });
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Nutritional Supplements for energy",
+                    Name = "Energy",
                     ParentCategoryId = 3
                 });
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Nutritional Supplements - Common discussions",
+                    Name = "Common discussions",
                     ParentCategoryId = 3
                 });
 
                 //Steroids
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Prohibited substances to increase muscle mass",
+                    Name = "Increase muscle mass",
                     ParentCategoryId = 4
                 });
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Prohibited substances to weight loss",
+                    Name = "Weight loss",
                     ParentCategoryId = 4
                 });
 
                 db.SubCategories.Add(new SubCategory
                 {
-                    Name = "Prohibited substances - Common discussions",
+                    Name = "Common discussions",
                     ParentCategoryId = 4
                 });
 

@@ -1,10 +1,8 @@
-﻿using Forum.Data;
-using Forum.Data.Models;
-using Forum.Models.SubCategories;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Forum.Data;
+using Forum.Models.SubCategories;
+
 
 namespace Forum.Services
 {

@@ -17,14 +17,11 @@
                 <table class="table table-dark home-table">
                     @foreach (var subCategory in mainCategory.SubCategories)
                     {
-
-
                         <tr class="home-table-row">
                             <td class="home-table-subCategory">
-                                <h5><a class="home-subCategory-text" href="/@mainCategory.CategoryName/@subCategory.Name ">@subCategory.Name</a></h5>
+                                <h5><a class="home-subCategory-text" href="/@mainCategory.CategoryName.Replace(' ', '-')/@subCategory.Name.Replace(' ', '-') ">@subCategory.Name</a></h5>
                             </td>
                         </tr>
-
                     }
                 </table>
             </div>
