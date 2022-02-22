@@ -39,8 +39,8 @@ namespace Forum.Helper
             {
                 db.Categories.Add(new Category { Name = "Trainings" });
                 db.Categories.Add(new Category { Name = "Nutrition" });
-                db.Categories.Add(new Category { Name = "Nutritional supplements" });
-                db.Categories.Add(new Category { Name = "Anabolic steroids and prohibited substances" });
+                db.Categories.Add(new Category { Name = "Supplements" });
+                db.Categories.Add(new Category { Name = "Steroids" });
 
                 db.SaveChanges();
             }

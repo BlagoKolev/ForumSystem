@@ -1,51 +1,50 @@
 ﻿using Forum.Services;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Forum.Controllers
 {
-    public class TrainingsController : Controller
+    
+    public class SupplementsController : Controller
     {
-        private readonly ITrainingService trainingService;
         private readonly IPostService postService;
 
-        public TrainingsController(ITrainingService trainingService, IPostService postService)
+        public SupplementsController(IPostService postService)
         {
-            this.trainingService = trainingService;
             this.postService = postService;
         }
-        public IActionResult Exercises()
-        {
-            string actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-            var posts = this.postService.GetAllPosts(actionName);
-            return View(posts);
-        }
 
-        [ActionName("Street-fitness")]
-        public IActionResult StreetFitness()
+        [ActionName("Increase-muscle-mass-and-strength")]
+        public IActionResult MuscleMass()
         {
             var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
             var categoryName = postService.GetCategoryName(actionName);
             var posts = postService.GetAllPosts(categoryName);
-            return View("StreetFitness", posts);
+
+            return View("MuscleMass", posts);
         }
 
-        [ActionName("Injuries-and-health-problems")]
-        public IActionResult Injuries()
-        {
-            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-            var categoryName = postService.GetCategoryName(actionName);
-            var posts = postService.GetAllPosts(categoryName);
-            return View("Injuries", posts);
-        }
-
-        [ActionName("Weight-loss-training-programs")]
+        [ActionName("Weight-loss-and-fat-reduction")]
         public IActionResult WeightLoss()
         {
             var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
             var categoryName = postService.GetCategoryName(actionName);
             var posts = postService.GetAllPosts(categoryName);
+
             return View("WeightLoss", posts);
+        }
+
+        [ActionName("Energy")]
+        public IActionResult Energy()
+        {
+            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
+            var categoryName = postService.GetCategoryName(actionName);
+            var posts = postService.GetAllPosts(categoryName);
+
+            return View("Energy", posts);
         }
 
         [ActionName("Common-discussions")]
@@ -56,16 +55,6 @@ namespace Forum.Controllers
             var posts = postService.GetAllPosts(categoryName);
             return View("CommonDiscussions", posts);
         }
-        
-        [ActionName("Мuscle-mass-increase-training-programs")]
-        public IActionResult MuscleMass()
-        {
-            var actionName = this.ControllerContext.RouteData.Values["action"].ToString();
-            var categoryName = postService.GetCategoryName(actionName);
-            var posts = postService.GetAllPosts(categoryName);
-            return this.View("МuscleMass", posts);
-        }
 
-        
     }
 }

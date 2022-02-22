@@ -51,6 +51,7 @@ namespace Forum
 
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<ITrainingService, TrainingService>();
+            services.AddTransient<IPostService, PostService>();
 
         }
 
