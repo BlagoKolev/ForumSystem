@@ -59,5 +59,28 @@ namespace Forum.Services
             var categoryName = actionName.Replace('-', ' ');
             return categoryName;
         }
+
+        public ReadPostViewModel GetPostById(int postId)
+        {
+            var searchedPost = db.Posts
+                .Where(x => x.Id == postId && !x.IsDeleted)
+                .Select(x => new ReadPostViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Contents = x.Contents,
+                    CategoryName = x.SubCategory.ParentCategory.Name,
+                    CategoryId = x.SubCategory.ParentCategoryId,
+                    SubCategoryName = x.SubCategory.Name,
+                    SubCategoryId = x.SubCategoryId,
+                    Creator = x.Creator.UserName,
+                    CreatorId = x.CreatorId,
+                    PublishedOn = x.PublishedOn,
+                    Comments = x.Comments
+                })
+                .FirstOrDefault();
+
+            return searchedPost;    
+        }
     }
 }

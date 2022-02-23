@@ -1,0 +1,20 @@
+﻿@model ReadPostViewModel
+
+<div>
+    <p class="text-white">@Model.Title</p>
+    <p class="text-white">@Model.Contents</p>
+    <p class="text-white">@Model.Creator</p>
+    <p class="text-white">@Model.SubCategoryName</p>
+    <p class="text-white">@Model.PublishedOn</p>
+    @foreach (var comment in Model.Comments)
+    {
+        <p class="text-white">@comment.PublishedOn</p>
+        <p class="text-white">@comment.Creator</p>
+        <p class="text-white">@comment.Contents</p>
+       
+
+
+    }
+
+
+</div>

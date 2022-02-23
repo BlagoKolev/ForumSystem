@@ -9,6 +9,7 @@ namespace Forum.Services
 {
     public interface IPostService
     {
+        public ReadPostViewModel GetPostById(int postId);
         ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName);
         public string GetCategoryName(string actionName);
         public void CreatePost(CreatePostViewModel createPostModel, string userId);

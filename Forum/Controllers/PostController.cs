@@ -1,12 +1,14 @@
-﻿using Forum.Models.Post;
-using Forum.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Forum.Models.Post;
+using Forum.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Forum.Models.SubCategories;
 
 namespace Forum.Controllers
 {
@@ -21,7 +23,19 @@ namespace Forum.Controllers
             this.postService = postService;
         }
 
+        public IActionResult Discussion(int postId)
+        {
+            var searchedPost = postService.GetPostById(postId);
+            if (searchedPost == null)
+            {
+               // return View("Error"); TODO
+               
+            }
+            return this.View(searchedPost);
+        }
+
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             ViewBag.CategoryId = homeService
@@ -49,7 +63,7 @@ namespace Forum.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                RedirectToAction("Home");
+                return this.RedirectToAction();
             }
 
             var userId = GetUserId();

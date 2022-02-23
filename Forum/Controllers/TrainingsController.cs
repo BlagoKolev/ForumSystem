@@ -6,12 +6,11 @@ namespace Forum.Controllers
 {
     public class TrainingsController : Controller
     {
-        private readonly ITrainingService trainingService;
+      
         private readonly IPostService postService;
 
-        public TrainingsController(ITrainingService trainingService, IPostService postService)
+        public TrainingsController(IPostService postService)
         {
-            this.trainingService = trainingService;
             this.postService = postService;
         }
         public IActionResult Exercises()
