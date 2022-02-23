@@ -66,6 +66,5 @@ namespace Forum.Controllers
             return this.View("МuscleMass", posts);
         }
 
-        
     }
 }

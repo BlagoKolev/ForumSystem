@@ -1,0 +1,54 @@
+﻿@model CreatePostViewModel
+
+<h3 class="text-white">Create your Post</h3>
+<form method="post" asp-controller="Post" asp-action="Create">
+    <div class="form-group">
+        <label class="text-white" asp-for="CategoryId">Main-Category</label>
+        <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.CategoryId">
+            <option value="">Select Category</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="text-white" asp-for="SubCategoryId">Sub-Category</label>
+        <select class="form-control" asp-for="SubCategoryId">
+        </select>
+        <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group text-white">
+        <label asp-for="Title">Title</label>
+        <textarea class="form-control" asp-for="Title" rows="1"></textarea>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group text-white">
+        <label asp-for="Contents">Content</label>
+        <textarea class="form-control" asp-for="Contents" rows="5"></textarea>
+        <span asp-validation-for="Contents" class="text-danger"></span>
+    </div>
+
+    <input type="submit" value="Publish post" class="btn btn-success" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("select#CategoryId").change(function () {
+                var mainCategoryId = $(this).val();
+
+                $("select#SubCategoryId").empty();
+
+                $.getJSON(`/Post/GetSubCategory?mainCategoryId=${mainCategoryId}`, function (data) {
+                    //console.log(data);
+                    $.each(data, function (i, item) {
+                        $("select#SubCategoryId").append(`<option value="${item.id}">${item.name}</option>`);
+                    });
+                });
+            })
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

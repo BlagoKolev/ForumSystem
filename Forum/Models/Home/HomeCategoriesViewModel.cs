@@ -13,6 +13,7 @@ namespace Forum.Models.Home
             this.SubCategories = new HashSet<SubCategory>();
         }
         public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
         public ICollection<SubCategory> SubCategories { get; set; }
 
     }

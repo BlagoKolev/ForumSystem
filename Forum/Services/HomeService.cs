@@ -23,6 +23,7 @@ namespace Forum.Services
                 .Select(c => new HomeCategoriesViewModel
                 {
                     CategoryName = c.Name,
+                    CategoryId = c.Id,
                     SubCategories = c.SubCategories
                    .OrderBy(c => c.Name.Length)
                    .ToList()

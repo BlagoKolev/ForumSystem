@@ -1,4 +1,5 @@
-﻿using Forum.Models.SubCategories;
+﻿using Forum.Models.Post;
+using Forum.Models.SubCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Forum.Services
     {
         ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName);
         public string GetCategoryName(string actionName);
+        public void CreatePost(CreatePostViewModel createPostModel, string userId);
     }
 }

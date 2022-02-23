@@ -1,4 +1,6 @@
 ﻿using Forum.Data;
+using Forum.Data.Models;
+using Forum.Models.Post;
 using Forum.Models.SubCategories;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,23 @@ namespace Forum.Services
         {
             this.db = db;
         }
+
+        public void CreatePost(CreatePostViewModel createPostModel, string userId)
+        {
+            var newPost = new Post
+            {
+                Title = createPostModel.Title,
+                Contents = createPostModel.Contents,
+                CreatorId = userId,
+                PublishedOn = DateTime.UtcNow,
+                SubCategoryId = createPostModel.SubCategoryId,
+                Comments = new HashSet<Comment>()
+            };
+
+            db.Posts.Add(newPost);
+            db.SaveChanges();
+        }
+
         public ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName)
         {
             var allPosts = this.db.Posts
@@ -28,7 +47,7 @@ namespace Forum.Services
                    SubCategoryName = x.SubCategory.Name,
                    CategoryName = x.SubCategory.ParentCategory.Name,
                    Creator = x.Creator.Email,
-                   PublishedOn = x.PublishedOn.Date,
+                   PublishedOn = x.PublishedOn.ToLocalTime(),
                    Comments = x.Comments
                })
                .ToList();
