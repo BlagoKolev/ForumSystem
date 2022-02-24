@@ -1,8 +1,11 @@
-﻿using Forum.Services;
+﻿using Forum.Models.Comments;
+using Forum.Models.Post;
+using Forum.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Forum.Controllers
@@ -16,10 +19,26 @@ namespace Forum.Controllers
             this.commentService = commentService;
         }
 
-        public IActionResult Create(int postId)
-        {
+        //[HttpGet]
+        //public IActionResult Create(int postId)
+        //{
            
-            return View(postId);
+        //    return View(postId);
+        //}
+
+        [HttpPost]
+        public IActionResult Create(ReadPostViewModel comment)
+        {
+            var userId = GetUserId();
+            var newCommentData = comment.CreateCommentViewModel;
+            commentService.CreateComment(newCommentData, userId);
+
+            return this.Redirect($"/Post/Discussion?postId={comment.Id}");
+        }
+        private string GetUserId()
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return userId;
         }
     }
 }

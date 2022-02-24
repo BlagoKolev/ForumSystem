@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Forum.Data.Models;
+using Forum.Models.Comments;
 
 namespace Forum.Models.Post
 {
@@ -21,5 +22,6 @@ namespace Forum.Models.Post
         public int SubCategoryId { get; set; }
         public DateTime PublishedOn { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public CreateCommentViewModel CreateCommentViewModel { get; set; }
     }
 }

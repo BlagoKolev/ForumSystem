@@ -1,4 +1,5 @@
 ﻿using Forum.Data.Models;
+using Forum.Models.Comments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace Forum.Services
 {
     public interface ICommentService
     {
-        public Comment CreateComment(int postId);
+        public void CreateComment(CreateCommentViewModel newCommentData, string userId);
     }
 }
