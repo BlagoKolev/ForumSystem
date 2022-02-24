@@ -1,20 +1,33 @@
 ﻿@model ReadPostViewModel
 
-<div>
-    <p class="text-white">@Model.Title</p>
-    <p class="text-white">@Model.Contents</p>
-    <p class="text-white">@Model.Creator</p>
-    <p class="text-white">@Model.SubCategoryName</p>
-    <p class="text-white">@Model.PublishedOn</p>
-    @foreach (var comment in Model.Comments)
-    {
-        <p class="text-white">@comment.PublishedOn</p>
-        <p class="text-white">@comment.Creator</p>
-        <p class="text-white">@comment.Contents</p>
-       
+<div class="discussion-container">
+    <div class="discussion-title">
+        <h3 class="text-white">@Model.SubCategoryName</h3>
+    </div>
+    <div class="discussion-content">
+       @*asp-controller="Comment" asp-action="Create"*@
+        <a href="/Comment/Create?postId=@Model.Id">
+            @*<input type="hidden" value="@Model.Id" />*@
+            <input type="button" class="btn btn-primary btn-comment" value="Write Comment" />
+        </a>
+        <div class="discussion-post">
+            <p class="text-white">@Model.Title</p>
+            <p class="text-white">@Model.Contents</p>
+            <p class="text-white published">Published by: @Model.Creator</p>
+            <p class="text-white published">Published on: @Model.PublishedOn</p>
+        </div>
+
+        <div class="discussion-comment-container">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="discussion-comment">
+                    <p class="text-white">@comment.PublishedOn</p>
+                    <p class="text-white">@comment.Creator</p>
+                    <p class="text-white">@comment.Contents</p>
+                </div>
+            }
+        </div>
 
 
-    }
-
-
+    </div>
 </div>
