@@ -10,8 +10,6 @@ namespace Forum.Models.Comments
 {
     public class CreateCommentViewModel
     {
-
-        public int Id { get; set; }
         public int SubCategoryId { get; set; }
         public string SubCategory { get; set; }
         [Required]
@@ -22,7 +20,7 @@ namespace Forum.Models.Comments
         public string Title { get; set; }
         public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
-        public string Creator { get; set; }
+       // public virtual IdentityUser Creator { get; set; }
         public string CreatorId { get; set; }
 
         public int PostId { get; set; }

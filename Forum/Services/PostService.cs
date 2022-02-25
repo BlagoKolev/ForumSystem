@@ -62,6 +62,10 @@ namespace Forum.Services
 
         public ReadPostViewModel GetPostById(int postId)
         {
+            //var comments = this.db.Comments
+            //    .Where(x => x.PostId == postId && !x.IsDeleted)
+            //                    .ToList();
+
             var searchedPost = db.Posts
                 .Where(x => x.Id == postId && !x.IsDeleted)
                 .Select(x => new ReadPostViewModel
@@ -73,14 +77,14 @@ namespace Forum.Services
                     CategoryId = x.SubCategory.ParentCategoryId,
                     SubCategoryName = x.SubCategory.Name,
                     SubCategoryId = x.SubCategoryId,
-                    Creator = x.Creator.UserName,
+                    Creator = x.Creator,
                     CreatorId = x.CreatorId,
                     PublishedOn = x.PublishedOn,
                     Comments = x.Comments
                 })
                 .FirstOrDefault();
 
-            return searchedPost;    
+            return searchedPost;
         }
     }
 }

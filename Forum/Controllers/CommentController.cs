@@ -19,21 +19,19 @@ namespace Forum.Controllers
             this.commentService = commentService;
         }
 
-        //[HttpGet]
-        //public IActionResult Create(int postId)
-        //{
-           
-        //    return View(postId);
-        //}
 
         [HttpPost]
         public IActionResult Create(ReadPostViewModel comment)
         {
             var userId = GetUserId();
             var newCommentData = comment.CreateCommentViewModel;
-            commentService.CreateComment(newCommentData, userId);
+            var newPost = commentService.CreateComment(newCommentData, userId);
+            if (newPost == null)
+            {
+                //TODO
+            }
 
-            return this.Redirect($"/Post/Discussion?postId={comment.Id}");
+            return this.Redirect($"/Post/Discussion?postId={newCommentData.PostId}");
         }
         private string GetUserId()
         {

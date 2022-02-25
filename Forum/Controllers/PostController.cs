@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Forum.Models.SubCategories;
+using Microsoft.AspNetCore.Identity;
+using Forum.Models.Comments;
 
 namespace Forum.Controllers
 {
@@ -16,20 +18,31 @@ namespace Forum.Controllers
     {
         private readonly IHomeService homeService;
         private readonly IPostService postService;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public PostController(IHomeService homeService, IPostService postService)
+        public PostController(IHomeService homeService,
+            IPostService postService,
+            UserManager<IdentityUser> userManager)
         {
             this.homeService = homeService;
             this.postService = postService;
+            this.userManager = userManager;
         }
 
-        public IActionResult Discussion(int postId)
+        public async Task<IActionResult> Discussion(int postId)
         {
+            //var user = await this.userManager.GetUserAsync(HttpContext.User);
             var searchedPost = postService.GetPostById(postId);
             if (searchedPost == null)
             {
                // return View("Error"); TODO
                
+            }
+            //searchedPost.CreateCommentViewModel = new CreateCommentViewModel();
+            //searchedPost.CreateCommentViewModel.Creator = user;
+            foreach (var comment in searchedPost.Comments)
+            {
+                comment.Creator = await userManager.FindByIdAsync($"{comment.CreatorId}");
             }
             return this.View(searchedPost);
         }

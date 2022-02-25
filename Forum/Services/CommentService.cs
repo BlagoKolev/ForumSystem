@@ -16,19 +16,25 @@ namespace Forum.Services
         {
             this.db = db;
         }
-        public void CreateComment(CreateCommentViewModel newCommentData, string userId)
+        public Comment CreateComment(CreateCommentViewModel newCommentData, string userId)
         {
+            //var currentUserWithComment = this.db.Users
+            //    .Where(x => x.Id == userId)
+            //    .FirstOrDefault();//to be commented
+
             var newComment = new Comment
             {
                 Contents = newCommentData.Contents,
                 CreatorId = userId,
-                PostId = newCommentData.Id,
+               //Creator = currentUserWithComment, //to be commented
+                PostId = newCommentData.PostId,
                 PublishedOn = newCommentData.PublishedOn,
                 Comments = new HashSet<Comment>(),
             };
 
             db.Comments.Add(newComment);
             db.SaveChanges();
+            return newComment;
         }
     }
 }

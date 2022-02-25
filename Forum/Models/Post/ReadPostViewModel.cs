@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Forum.Data.Models;
 using Forum.Models.Comments;
+using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Models.Post
 {
@@ -14,7 +15,7 @@ namespace Forum.Models.Post
         public int Id { get; set; }
         public string Title { get; set; }
         public string Contents { get; set; }
-        public string Creator { get; set; }
+        public IdentityUser Creator { get; set; }
         public string CreatorId { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
