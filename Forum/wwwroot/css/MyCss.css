@@ -77,6 +77,26 @@ a {
     
 }
 
-.btn-comment {
+.btn-comment , .btn-answer {
     float: right;
+}
+
+.discussion-comment-container {
+   
+    margin: 30px;
+   
+    border-radius: 5px;
+}
+
+.discussion-comment {
+    background-color: #343A40;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}
+
+.comment-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -1,6 +1,7 @@
 ﻿using Forum.Models.Comments;
 using Forum.Models.Post;
 using Forum.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,8 @@ namespace Forum.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(ReadPostViewModel comment)
+        [Authorize]
+        public IActionResult CreateComment(ReadPostViewModel comment)
         {
             var userId = GetUserId();
             var newCommentData = comment.CreateCommentViewModel;
@@ -32,6 +34,16 @@ namespace Forum.Controllers
             }
 
             return this.Redirect($"/Post/Discussion?postId={newCommentData.PostId}");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult CreateAnswer(ReadPostViewModel answer, int Id)
+        {
+            var userId = GetUserId();
+            var newAnswerData = answer.CreateCommentViewModel;
+            var newAnswer = commentService.CreateAnswer(newAnswerData, userId, Id);
+            return Redirect($"/Post/Discussion?postid={newAnswerData.PostId}");
         }
         private string GetUserId()
         {

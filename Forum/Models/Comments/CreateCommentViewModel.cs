@@ -20,7 +20,8 @@ namespace Forum.Models.Comments
         public string Title { get; set; }
         public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
-       // public virtual IdentityUser Creator { get; set; }
+        // public virtual IdentityUser Creator { get; set; }
+        public bool IsAnswer { get; set; }
         public string CreatorId { get; set; }
 
         public int PostId { get; set; }

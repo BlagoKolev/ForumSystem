@@ -5,11 +5,24 @@
         <h3 class="text-white">@Model.SubCategoryName</h3>
     </div>
     <div class="discussion-content">
-        @*Start of Modal form*@
-        <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#exampleModal" value="Write Comment" />
 
-        <form method="post" asp-controller="Comment" asp-action="Create">
-            <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+        @*Start of Modal form*@
+        @{
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" disabled />
+            }
+            else
+            {
+                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" />
+
+            }
+
+        }
+
+        <form method="post" asp-controller="Comment" asp-action="CreateComment">
+
+            <div id="WriteCommentModal" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -24,13 +37,10 @@
                                 <input type="text" class="form-control" asp-for="@Model.CreateCommentViewModel.Contents" />
                                 <span asp-validation-for="@Model.CreateCommentViewModel.Contents" />
                             </div>
-
                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.PublishedOn" value="@DateTime.UtcNow" />
                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.SubCategory" value="@Model.SubCategoryName" />
                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.SubCategoryId" value="@Model.SubCategoryId" />
                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.PostId" value="@Model.Id" />
-                           
-                           
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Publish Post</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -47,7 +57,7 @@
             <p class="text-white">@Model.Title</p>
             <p class="text-white">@Model.Contents</p>
             <p class="text-white published">Published by: @Model.Creator</p>
-            <p class="text-white published">Published on: @Model.PublishedOn</p>
+            <p class="text-white published">Published on: @Model.PublishedOn.ToLocalTime()</p>
         </div>
 
         <div class="discussion-comment-container">
@@ -55,14 +65,108 @@
             {
                 <div class="discussion-comment">
                     <p class="text-white">@comment.Contents</p>
-                    <p class="text-white">@comment.Creator</p>
-                    <p class="text-white">@comment.PublishedOn</p>
+                    <div class="comment-details">
+                        <div class="comment-details-published">
+                            <p class="text-white published">Published by: @comment.Creator</p>
+                            <p class="text-white published">Published on: @comment.PublishedOn.ToLocalTime()</p>
+                            <p class="text-white published">Answers: @comment.Comments.Count</p>
+                            <p class="text-white published">Comment ID: @comment.Id</p>
+                        </div>
+
+                        <form method="post" asp-controller="Comment" asp-action="CreateAnswer">
+                            <div id="WriteAnswerModal" class="modal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Write Answer</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Comment:</label>
+                                                <input type="text" class="form-control" asp-for="@Model.CreateCommentViewModel.Contents" />
+                                                <span asp-validation-for="@Model.CreateCommentViewModel.Contents" />
+                                            </div>
+
+                                            <input type="hidden" asp-for="@Model.CreateCommentViewModel.PublishedOn" value="@DateTime.UtcNow" />
+                                            <input type="hidden" asp-for="@Model.CreateCommentViewModel.SubCategory" value="@Model.SubCategoryName" />
+                                            <input type="hidden" asp-for="@Model.CreateCommentViewModel.SubCategoryId" value="@Model.SubCategoryId" />
+                                            <input type="hidden" asp-for="@Model.CreateCommentViewModel.PostId" value="@Model.Id" />
+                                            <input type="hidden" asp-for="@Model.CreateCommentViewModel.IsAnswer" value="true" />
+
+                                            @*Problem to pass*@
+                                            @*<input type="hidden" onclick="location.href='@Url.Action("Comment", "CreateAnswer", new { commentId = comment.Id })'" />*@
+                                            @*<input type="hidden" asp-for="Id" />*@
+                                            <input type="hidden" asp-for="Id" value="@comment.Id" />
+
+
+
+
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Publish Post</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        @*Start Modal Form*@
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
+                            @*<input type="hidden" asp-for="Id" data-toggle="modal" data-target="#WriteAnswerModal" />*@
+                        }
+                        else
+                        {
+                            <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
+                        }
+
+
+
+
+                    </div>
                 </div>
+                if (comment.Comments.Any())
+                {
+                    foreach (var answer in comment.Comments)
+                    {
+                        <div class="discussion-answer">
+                            <p class="text-white">@answer.Contents</p>
+                            <div class="comment-details">
+                                <div class="comment-details-published">
+                                    <p class="text-white published">Published by: @answer.Creator</p>
+                                    <p class="text-white published">Published on: @answer.PublishedOn.ToLocalTime()</p>
+                                </div>
+
+
+                                @*@if (this.User.Identity.IsAuthenticated)
+                                {
+
+                                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" />
+                                }
+                                else
+                                {
+                                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
+                                }*@
+
+
+
+                            </div>
+                        </div>
+                    }
+                }
             }
+
         </div>
 
+        
 
     </div>
 </div>
-@*<partial name="_PartialModalCommentForm" for="CreateCommentViewModel" />*@
+
 <partial name="_ValidationScriptsPartial" />

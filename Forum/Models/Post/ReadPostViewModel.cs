@@ -23,6 +23,7 @@ namespace Forum.Models.Post
         public int SubCategoryId { get; set; }
         public DateTime PublishedOn { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public int CommentToAnswerId { get; set; }
         public CreateCommentViewModel CreateCommentViewModel { get; set; }
     }
 }

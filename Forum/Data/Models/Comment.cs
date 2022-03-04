@@ -27,6 +27,7 @@ namespace Forum.Data.Models
         public string CreatorId { get; set; }
         public DateTime PublishedOn { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsAnswer { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

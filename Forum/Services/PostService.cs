@@ -81,6 +81,8 @@ namespace Forum.Services
                     CreatorId = x.CreatorId,
                     PublishedOn = x.PublishedOn,
                     Comments = x.Comments
+                    .Where(x => !x.IsAnswer)
+                    .ToList()
                 })
                 .FirstOrDefault();
 
