@@ -80,9 +80,18 @@ namespace Forum.Services
                     Creator = x.Creator,
                     CreatorId = x.CreatorId,
                     PublishedOn = x.PublishedOn,
-                    Comments = x.Comments
-                    .Where(x => !x.IsAnswer)
-                    .ToList()
+                    Comments = x.Comments.Select(c => new Comment
+                    {
+                        Id = c.Id,
+                        
+                        Answers = c.Answers,
+                        Contents = c.Contents,
+                        CreatorId = c.CreatorId,
+                        Creator = c.Creator,
+                        PostId = c.PostId,
+                        PublishedOn = c.PublishedOn
+                    }).ToList()
+
                 })
                 .FirstOrDefault();
 

@@ -10,6 +10,6 @@ namespace Forum.Services
     public interface ICommentService
     {
         public Comment CreateComment(CreateCommentViewModel newCommentData, string userId);
-        public Comment CreateAnswer(CreateCommentViewModel newAnswerData, string userId, int postId);
+        public Answer CreateAnswer(CreateCommentViewModel newAnswerData, string userId, int postId);
     }
 }

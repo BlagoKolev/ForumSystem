@@ -40,10 +40,10 @@ namespace Forum.Controllers
             }
             //searchedPost.CreateCommentViewModel = new CreateCommentViewModel();
             //searchedPost.CreateCommentViewModel.Creator = user;
-            foreach (var comment in searchedPost.Comments)
-            {
-                comment.Creator = await userManager.FindByIdAsync($"{comment.CreatorId}");
-            }
+            //foreach (var comment in searchedPost.Comments)
+            //{
+            //    comment.Creator = await userManager.FindByIdAsync($"{comment.CreatorId}");
+            //}
             return this.View(searchedPost);
         }
 

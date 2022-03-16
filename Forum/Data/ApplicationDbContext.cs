@@ -18,5 +18,21 @@ namespace Forum.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<ProfilePicture> ProfilePictures { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Answer>()               
+                .HasOne(x => x.Comment)
+                .WithMany(x => x.Answers)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Comment>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.Comments)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

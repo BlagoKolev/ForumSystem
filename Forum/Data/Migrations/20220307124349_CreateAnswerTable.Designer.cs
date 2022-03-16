@@ -4,14 +4,16 @@ using Forum.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220307124349_CreateAnswerTable")]
+    partial class CreateAnswerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace Forum.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CommentId")
+                    b.Property<int?>("AnswerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Contents")
@@ -36,9 +38,6 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("CreatorId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatorName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -51,7 +50,7 @@ namespace Forum.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId");
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("CreatorId");
 
@@ -87,6 +86,9 @@ namespace Forum.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Contents")
                         .IsRequired()
                         .HasMaxLength(5000)
@@ -105,6 +107,8 @@ namespace Forum.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("CreatorId");
 
@@ -401,11 +405,9 @@ namespace Forum.Data.Migrations
 
             modelBuilder.Entity("Forum.Data.Models.Answer", b =>
                 {
-                    b.HasOne("Forum.Data.Models.Comment", "Comment")
+                    b.HasOne("Forum.Data.Models.Answer", null)
                         .WithMany("Answers")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("AnswerId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
                         .WithMany()
@@ -417,8 +419,6 @@ namespace Forum.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comment");
-
                     b.Navigation("Creator");
 
                     b.Navigation("Post");
@@ -426,6 +426,10 @@ namespace Forum.Data.Migrations
 
             modelBuilder.Entity("Forum.Data.Models.Comment", b =>
                 {
+                    b.HasOne("Forum.Data.Models.Comment", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("CommentId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
@@ -433,7 +437,7 @@ namespace Forum.Data.Migrations
                     b.HasOne("Forum.Data.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Creator");
@@ -527,6 +531,11 @@ namespace Forum.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Forum.Data.Models.Answer", b =>
+                {
+                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("Forum.Data.Models.Category", b =>

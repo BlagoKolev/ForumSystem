@@ -17,24 +17,30 @@ namespace Forum.Services
             this.db = db;
         }
 
-        public Comment CreateAnswer(CreateCommentViewModel newAnswerData, string userId, int commentId)
+        public Answer CreateAnswer(CreateCommentViewModel newAnswerData, string userId, int commentId)
         {
-            var newAnswer = new Comment
-            {
-                Contents = newAnswerData.Contents,
-                CreatorId = userId,
-                PostId = newAnswerData.PostId,
-                PublishedOn = newAnswerData.PublishedOn,
-                Comments = new HashSet<Comment>(),
-                IsAnswer = newAnswerData.IsAnswer
-            };
-
-            var comment = this.db.Comments
-                .Where(x => x.Id == commentId && !x.IsDeleted)
+            var creator = this.db.Users
+                .Where(u => u.Id == userId)
                 .FirstOrDefault();
 
-            comment.Comments.Add(newAnswer);
-            this.db.Comments.Add(newAnswer);
+            var newAnswer = new Answer
+            {
+                Contents = newAnswerData.Contents,
+                CreatorName = creator.UserName, //experimental prop
+                CreatorId = userId,
+                Creator = creator,
+                PostId = newAnswerData.PostId,
+                PublishedOn = newAnswerData.PublishedOn,
+                CommentId = commentId
+            };
+
+            //var comment = this.db.Comments
+            //    .Where(x => x.Id == commentId && !x.IsDeleted)
+            //    .Select(x=>x.Answers)
+            //    .FirstOrDefault();
+
+            //comment.Answers.Add(newAnswer);
+            this.db.Answers.Add(newAnswer);
             this.db.SaveChanges();
 
             return newAnswer;
@@ -53,7 +59,7 @@ namespace Forum.Services
                //Creator = currentUserWithComment, //to be commented
                 PostId = newCommentData.PostId,
                 PublishedOn = newCommentData.PublishedOn,
-                Comments = new HashSet<Comment>(),
+               // Comments = new HashSet<Comment>(),
             };
 
             db.Comments.Add(newComment);

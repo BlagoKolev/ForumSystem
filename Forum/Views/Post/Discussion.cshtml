@@ -69,12 +69,12 @@
                         <div class="comment-details-published">
                             <p class="text-white published">Published by: @comment.Creator</p>
                             <p class="text-white published">Published on: @comment.PublishedOn.ToLocalTime()</p>
-                            <p class="text-white published">Answers: @comment.Comments.Count</p>
+                            <p class="text-white published">Answers: @comment.Answers.Count</p>
                             <p class="text-white published">Comment ID: @comment.Id</p>
                         </div>
 
                         <form method="post" asp-controller="Comment" asp-action="CreateAnswer">
-                            <div id="WriteAnswerModal" class="modal" tabindex="-1" role="dialog">
+                            <div id="WriteAnswerModal-@comment.Id" class="modal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -85,8 +85,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label>Comment:</label>
-                                                <input type="text" class="form-control" asp-for="@Model.CreateCommentViewModel.Contents" />
+                                                <label>Answer:</label>
+                                                <input type="text" class="form-control" asp-for="@Model.CreateCommentViewModel.Contents" rows="5" />
                                                 <span asp-validation-for="@Model.CreateCommentViewModel.Contents" />
                                             </div>
 
@@ -106,7 +106,7 @@
 
 
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Publish Post</button>
+                                                <button type="submit" class="btn btn-primary">Publish Answer</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
@@ -131,15 +131,15 @@
 
                     </div>
                 </div>
-                if (comment.Comments.Any())
+                if (comment.Answers.Any())
                 {
-                    foreach (var answer in comment.Comments)
+                    foreach (var answer in comment.Answers)
                     {
                         <div class="discussion-answer">
                             <p class="text-white">@answer.Contents</p>
                             <div class="comment-details">
                                 <div class="comment-details-published">
-                                    <p class="text-white published">Published by: @answer.Creator</p>
+                                    <p class="text-white published">Published by: @answer.CreatorName</p>
                                     <p class="text-white published">Published on: @answer.PublishedOn.ToLocalTime()</p>
                                 </div>
 
