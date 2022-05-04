@@ -74,17 +74,14 @@ a {
     background-color: #343A40 !important;
     padding: 10px 20px;
     border-radius: 5px;
-    
 }
 
-.btn-comment , .btn-answer {
+.btn-comment, .btn-answer {
     float: right;
 }
 
 .discussion-comment-container {
-   
     margin: 30px;
-   
     border-radius: 5px;
 }
 
@@ -99,4 +96,9 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#answers {
+    display: none;
+    
 }

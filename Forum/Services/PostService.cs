@@ -62,10 +62,7 @@ namespace Forum.Services
 
         public ReadPostViewModel GetPostById(int postId)
         {
-            //var comments = this.db.Comments
-            //    .Where(x => x.PostId == postId && !x.IsDeleted)
-            //                    .ToList();
-
+           
             var searchedPost = db.Posts
                 .Where(x => x.Id == postId && !x.IsDeleted)
                 .Select(x => new ReadPostViewModel
