@@ -114,7 +114,7 @@
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
-                            <button onclick="ShowAnswers(@comment.Id)">Show Answers</button>
+                            <button id="answers-button-@comment.Id" onclick="ShowAnswers(@comment.Id)">Show Answers</button>
                             @*<input type="hidden" asp-for="Id" data-toggle="modal" data-target="#WriteAnswerModal" />*@
                         }
                         else
@@ -153,12 +153,14 @@
     <script>
         function ShowAnswers(commentId) {
             var x = document.getElementById("answers-" + commentId);
+            var button = document.getElementById("answers-button-" + commentId);
+
             if (x.style.display === "none") {
                 x.style.display = "block";
-
+                button.innerHTML = "Hide Answers";
             } else {
                 x.style.display = "none";
-               
+                button.innerHTML = "Show Answers";
             }
         }
     </script>
