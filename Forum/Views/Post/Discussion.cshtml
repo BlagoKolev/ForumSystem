@@ -17,7 +17,7 @@
                 <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" />
 
             }
-
+            var RRR = Model;
         }
 
         <form method="post" asp-controller="Comment" asp-action="CreateComment">
@@ -100,11 +100,6 @@
                                             @*<input type="hidden" onclick="location.href='@Url.Action("Comment", "CreateAnswer", new { commentId = comment.Id })'" />*@
                                             @*<input type="hidden" asp-for="Id" />*@
                                             <input type="hidden" asp-for="Id" value="@comment.Id" />
-
-
-
-
-
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Publish Answer</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -119,7 +114,7 @@
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
-                            <button onclick="ShowAnswers()">Show Answers</button>
+                            <button onclick="ShowAnswers(@comment.Id)">Show Answers</button>
                             @*<input type="hidden" asp-for="Id" data-toggle="modal" data-target="#WriteAnswerModal" />*@
                         }
                         else
@@ -127,16 +122,12 @@
                             <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
                             <button onclick="ShowAnswers()" disabled>Show Answers</button>
                         }
-
-
-
-
                     </div>
                 </div>
-                <div id="answers">
-                    @if (comment.Answers.Any())
-                    {
-                        foreach (var answer in comment.Answers)
+                @if (comment.Answers.Any())
+                {
+                    <div id="answers-@comment.Id" style="display:none">
+                        @foreach (var answer in comment.Answers)
                         {
                             <div class="discussion-answer">
                                 <p class="text-white">@answer.Contents</p>
@@ -148,31 +139,26 @@
                                 </div>
                             </div>
                         }
-                    }
-                </div>
+                    </div>
+                }
             }
 
         </div>
-
-
-
     </div>
 </div>
 
-
-<partial name="_ValidationScriptsPartial" />
-
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
-        function ShowAnswers(e) {
-          
-            var x = document.getElementById("answers");
+        function ShowAnswers(commentId) {
+            var x = document.getElementById("answers-" + commentId);
             if (x.style.display === "none") {
                 x.style.display = "block";
-               
+
             } else {
                 x.style.display = "none";
-                x.innerHTML = "Show Answers"
+               
             }
         }
     </script>
