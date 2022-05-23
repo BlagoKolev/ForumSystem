@@ -13,5 +13,6 @@ namespace Forum.Services
         ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName);
         public string GetCategoryName(string actionName);
         public void CreatePost(CreatePostViewModel createPostModel, string userId);
+        public Task<bool> DeletePost(int postId);
     }
 }

@@ -76,7 +76,7 @@ a {
     border-radius: 5px;
 }
 
-.btn-comment, .btn-answer {
+.btn-comment, .btn-answer, .btn-delete {
     float: right;
 }
 

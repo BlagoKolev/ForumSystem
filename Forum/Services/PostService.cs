@@ -34,6 +34,23 @@ namespace Forum.Services
             db.SaveChanges();
         }
 
+        public async Task<bool> DeletePost(int postId)
+        {
+            bool isDeleted;
+
+            var post = this.db.Posts
+                .Where(x => x.Id == postId)
+                .FirstOrDefault();
+
+            isDeleted = post != null;
+
+            post.IsDeleted = true;
+
+            await db.SaveChangesAsync();
+
+            return isDeleted;
+        }
+
         public ICollection<SubCategoryAllPostsViewModel> GetAllPosts(string actionName)
         {
             var allPosts = this.db.Posts

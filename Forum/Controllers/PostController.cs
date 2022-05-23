@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Forum.Models.SubCategories;
 using Microsoft.AspNetCore.Identity;
 using Forum.Models.Comments;
+using Forum.Data;
 
 namespace Forum.Controllers
 {
@@ -29,7 +30,7 @@ namespace Forum.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Discussion(int postId)
+        public IActionResult Discussion(int postId)
         {
             //var user = await this.userManager.GetUserAsync(HttpContext.User);
             var searchedPost = postService.GetPostById(postId);
@@ -72,6 +73,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(CreatePostViewModel createPostModel)
         {
             if (!this.ModelState.IsValid)
@@ -84,6 +86,18 @@ namespace Forum.Controllers
             
 
             return this.Redirect("/Home/Index");
+        }
+
+        public async Task<IActionResult> Delete(int postId)
+        {
+            var isDeleted = await postService.DeletePost(postId);
+
+            if (isDeleted)
+            {
+                TempData[GlobalConstants.AlertMessageKey] = GlobalConstants.AlertMessage.PostDeleted;
+            }
+
+            return Redirect("/Home/Index");
         }
 
         private string GetUserId()

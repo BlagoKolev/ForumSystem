@@ -10,6 +10,12 @@
     @foreach (var post in Model)
     {
         var postContent = post.Contents;
+        var postTitle = post.Title;
+
+        if (post.Title.Length > 40)
+        {
+            postTitle = postContent.Substring(0, 40) + " ...";
+        }
 
         if (post.Contents.Length > 150)
         {
@@ -17,7 +23,7 @@
         }
         <tr>
             <td>
-                <a href="" class="text-white">@post.Title</a>
+                <a href="" class="text-white">@postTitle</a>
             </td>
             <td>
                 <a href="/Post/Discussion?postId=@post.Id" class="text-white">@postContent</a>
@@ -29,6 +35,6 @@
                 <a class="text-white">@post.PublishedOn</a>
             </td>
         </tr>
-           
+
     }
 </table>

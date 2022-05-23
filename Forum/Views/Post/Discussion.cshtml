@@ -1,4 +1,6 @@
 ﻿@model ReadPostViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 
 <div class="discussion-container">
     <div class="discussion-title">
@@ -17,7 +19,15 @@
                 <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" />
 
             }
-            var RRR = Model;
+
+            var userId = UserManager.GetUserId(User);
+
+            if (userId == Model.CreatorId)
+            {
+                <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#deleteModal">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            }
         }
 
         <form method="post" asp-controller="Comment" asp-action="CreateComment">
@@ -147,6 +157,8 @@
     </div>
 </div>
 
+<partial name="_DeletePostModal" />
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
@@ -165,3 +177,4 @@
         }
     </script>
 }
+
