@@ -71,22 +71,22 @@ a {
 }
 
 .discussion-post {
-    background-color: #343A40 !important;
+    background-color: #0F89CA !important;
     padding: 10px 20px;
     border-radius: 5px;
 }
 
-.btn-comment, .btn-answer, .btn-delete {
+.btn-comment, .btn-answer, .btn-delete, .show-answers {
     float: right;
 }
 
 .discussion-comment-container {
-    margin: 30px;
-    border-radius: 5px;
+    margin-top: 30px;
+    margin-left: 50px;
 }
 
 .discussion-comment {
-    background-color: #343A40;
+    background-color: #14A0DB;
     border-radius: 5px;
     margin-bottom: 5px;
     padding: 20px;
@@ -98,7 +98,15 @@ a {
     align-items: center;
 }
 
-/*#answers {
-    display: none;
-    
-}*/
+.discussion-answer-container {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.discussion-answer {
+    background-color: #6192AC;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}

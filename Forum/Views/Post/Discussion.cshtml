@@ -73,6 +73,16 @@
         <div class="discussion-comment-container">
             @foreach (var comment in Model.Comments)
             {
+
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
+                }
+                else
+                {
+                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
+                }
+                <button id="answers-button-@comment.Id" onclick="ShowAnswers(@comment.Id)" class="btn btn-primary show-answers">Show Answers</button>
                 <div class="discussion-comment">
                     <p class="text-white">@comment.Contents</p>
                     <div class="comment-details">
@@ -120,23 +130,12 @@
                             </div>
                         </form>
 
-                        @*Start Modal Form*@
-                        @if (this.User.Identity.IsAuthenticated)
-                        {
-                            <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
-                            <button id="answers-button-@comment.Id" onclick="ShowAnswers(@comment.Id)">Show Answers</button>
-                            @*<input type="hidden" asp-for="Id" data-toggle="modal" data-target="#WriteAnswerModal" />*@
-                        }
-                        else
-                        {
-                            <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
-                            <button onclick="ShowAnswers()" disabled>Show Answers</button>
-                        }
+
                     </div>
                 </div>
                 @if (comment.Answers.Any())
                 {
-                    <div id="answers-@comment.Id" style="display:none">
+                    <div id="answers-@comment.Id" style="display:none" class="discussion-answer-container">
                         @foreach (var answer in comment.Answers)
                         {
                             <div class="discussion-answer">
