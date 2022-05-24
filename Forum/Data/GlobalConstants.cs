@@ -10,7 +10,8 @@ namespace Forum.Data
         public const string AlertMessageKey = "AlertMessage";
         public class AlertMessage
         {
-            public const string PostDeleted = "Post was successfully deleted.";
+            public const string PostDeleted = "Your Post was successfully deleted.";
+            public const string CommentDeleted = "Your Comment was successfully deleted.";
         }
     }
 }

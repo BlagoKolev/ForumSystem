@@ -56,15 +56,48 @@ namespace Forum.Services
             {
                 Contents = newCommentData.Contents,
                 CreatorId = userId,
-               //Creator = currentUserWithComment, //to be commented
+                //Creator = currentUserWithComment, //to be commented
                 PostId = newCommentData.PostId,
                 PublishedOn = newCommentData.PublishedOn,
-               // Comments = new HashSet<Comment>(),
+                // Comments = new HashSet<Comment>(),
             };
 
             db.Comments.Add(newComment);
             db.SaveChanges();
             return newComment;
+        }
+
+        public async Task<int> DeleteComment(int commentId)
+        {
+            var answers = db.Answers
+            .Where(x => x.CommentId == commentId)
+            .ToList();
+
+            if (answers.Any())
+            {
+                foreach (var answer in answers)
+                {
+                    answer.IsDeleted = true;
+                }
+            }
+
+            var comment = db.Comments
+                .Where(x => x.Id == commentId)
+                .FirstOrDefault();
+
+            if (comment != null)
+            {
+                comment.IsDeleted = true;
+            }
+
+            var postId = db.Comments
+                .Where(x => x.Id == commentId)
+                .Select(x => x.PostId)
+                .FirstOrDefault();
+
+            await db.SaveChangesAsync();
+
+            return postId;
         }
     }
 }

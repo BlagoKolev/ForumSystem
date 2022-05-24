@@ -11,5 +11,6 @@ namespace Forum.Services
     {
         public Comment CreateComment(CreateCommentViewModel newCommentData, string userId);
         public Answer CreateAnswer(CreateCommentViewModel newAnswerData, string userId, int postId);
+        public Task<int> DeleteComment(int commentId);
     }
 }

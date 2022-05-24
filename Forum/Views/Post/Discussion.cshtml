@@ -73,14 +73,27 @@
         <div class="discussion-comment-container">
             @foreach (var comment in Model.Comments)
             {
-
+                if (userId == Model.CreatorId)
+                {  //DELETE Comment
+            <h1>@comment.Id</h1>
+                   
+                        <span class="btn-delete" id="confirm-delete-span-@comment.Id" style="display: none">
+                            <span>Are you sure you want to <b>Delete</b> your Comment?</span>
+                            <a href="/Comment/Delete/?commentId=@comment.Id" class="btn btn-danger">Yes</a>
+                            <a href="#" class="btn btn-primary" onclick="confirmDelete(@comment.Id, false)">No</a>
+                        </span>
+                        <button id="delete-@comment.Id" type="button" class="btn btn-danger btn-delete" onclick="confirmDelete(@comment.Id, true)">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                   
+                }
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
+                    <input id="write-answer-@comment.Id" type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal-@comment.Id" value="Answer" />
                 }
                 else
                 {
-                    <input type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
+                    <input id="write-answer-@comment.Id" type="button" class="btn btn-primary btn-answer comment-details-answerBtn " data-toggle="modal" data-target="#WriteAnswerModal" value="Answer" disabled />
                 }
                 <button id="answers-button-@comment.Id" onclick="ShowAnswers(@comment.Id)" class="btn btn-primary show-answers">Show Answers</button>
                 <div class="discussion-comment">
@@ -172,6 +185,28 @@
             } else {
                 x.style.display = "none";
                 button.innerHTML = "Show Answers";
+            }
+        }
+    </script>
+
+    <script>
+        function confirmDelete(commentId, isDeleteClicked) {
+
+            var confirmDeleteSpan = "confirm-delete-span-" + commentId;
+            var deleteSpan = "delete-" + commentId;
+            var showAnswersButton = 'answers-button-' + commentId;
+            var writeAnswerButton = 'write-answer-' + commentId;
+
+            if (isDeleteClicked) {
+                $('#' + deleteSpan).hide();
+                $('#' + showAnswersButton).hide();
+                $('#' + writeAnswerButton).hide();
+                $('#' + confirmDeleteSpan).show();
+            } else {
+                $('#' + confirmDeleteSpan).hide();
+                $('#' + showAnswersButton).show();
+                $('#' + writeAnswerButton).show();
+                $('#' + deleteSpan).show();
             }
         }
     </script>

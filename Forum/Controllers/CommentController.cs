@@ -1,4 +1,5 @@
-﻿using Forum.Models.Comments;
+﻿using static Forum.Data.GlobalConstants;
+using Forum.Models.Comments;
 using Forum.Models.Post;
 using Forum.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +45,21 @@ namespace Forum.Controllers
             var newAnswerData = answer.CreateCommentViewModel;
             var newAnswer = commentService.CreateAnswer(newAnswerData, userId, Id);
             return Redirect($"/Post/Discussion?postid={newAnswerData.PostId}");
+        }
+
+        [Authorize]
+   
+        public async Task<IActionResult> Delete(int commentId)
+        {
+            int postId = await commentService.DeleteComment(commentId);
+
+            if (postId == 0)
+            {
+                return BadRequest();
+                //TODO customError
+            }
+            TempData[AlertMessageKey] = AlertMessage.CommentDeleted;
+            return Redirect($"/Post/Discussion?postId={postId}");
         }
         private string GetUserId()
         {

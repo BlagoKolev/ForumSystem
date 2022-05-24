@@ -79,7 +79,7 @@ namespace Forum.Services
 
         public ReadPostViewModel GetPostById(int postId)
         {
-           
+
             var searchedPost = db.Posts
                 .Where(x => x.Id == postId && !x.IsDeleted)
                 .Select(x => new ReadPostViewModel
@@ -94,17 +94,32 @@ namespace Forum.Services
                     Creator = x.Creator,
                     CreatorId = x.CreatorId,
                     PublishedOn = x.PublishedOn,
-                    Comments = x.Comments.Select(c => new Comment
+                    Comments = x.Comments
+                    .Where(x => !x.IsDeleted)
+                    .Select(c => new Comment
                     {
                         Id = c.Id,
-                        
-                        Answers = c.Answers,
+
                         Contents = c.Contents,
                         CreatorId = c.CreatorId,
                         Creator = c.Creator,
                         PostId = c.PostId,
-                        PublishedOn = c.PublishedOn
-                    }).ToList()
+                        PublishedOn = c.PublishedOn,
+                        Answers = c.Answers
+                        .Where(x => !x.IsDeleted)
+                        .Select(a => new Answer
+                        {
+                            Id = a.Id,
+                            CommentId = a.CommentId,
+                            Contents = a.Contents,
+                            CreatorId = a.CreatorId,
+                            CreatorName = a.CreatorName,
+                            IsDeleted = a.IsDeleted,
+                            PublishedOn = a.PublishedOn,
+                        })
+                        .ToList(),
+                    })
+                    .ToList()
 
                 })
                 .FirstOrDefault();
