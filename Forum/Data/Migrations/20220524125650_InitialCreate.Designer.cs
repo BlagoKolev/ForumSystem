@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220215123633_RemoveCategoryPropFromPost")]
-    partial class RemoveCategoryPropFromPost
+    [Migration("20220524125650_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,42 @@ namespace Forum.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Forum.Data.Models.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PublishedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Answers");
+                });
 
             modelBuilder.Entity("Forum.Data.Models.Category", b =>
                 {
@@ -48,9 +84,6 @@ namespace Forum.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Contents")
                         .IsRequired()
                         .HasMaxLength(5000)
@@ -69,8 +102,6 @@ namespace Forum.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
 
                     b.HasIndex("CreatorId");
 
@@ -365,12 +396,25 @@ namespace Forum.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Forum.Data.Models.Answer", b =>
+                {
+                    b.HasOne("Forum.Data.Models.Comment", "Comment")
+                        .WithMany("Answers")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("Forum.Data.Models.Comment", b =>
                 {
-                    b.HasOne("Forum.Data.Models.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
@@ -481,7 +525,7 @@ namespace Forum.Data.Migrations
 
             modelBuilder.Entity("Forum.Data.Models.Comment", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("Forum.Data.Models.Post", b =>

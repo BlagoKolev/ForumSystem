@@ -43,9 +43,6 @@ namespace Forum.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PublishedOn")
                         .HasColumnType("datetime2");
 
@@ -54,8 +51,6 @@ namespace Forum.Data.Migrations
                     b.HasIndex("CommentId");
 
                     b.HasIndex("CreatorId");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Answers");
                 });
@@ -404,24 +399,16 @@ namespace Forum.Data.Migrations
                     b.HasOne("Forum.Data.Models.Comment", "Comment")
                         .WithMany("Answers")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.HasOne("Forum.Data.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Comment");
 
                     b.Navigation("Creator");
-
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Forum.Data.Models.Comment", b =>
@@ -433,7 +420,7 @@ namespace Forum.Data.Migrations
                     b.HasOne("Forum.Data.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Creator");

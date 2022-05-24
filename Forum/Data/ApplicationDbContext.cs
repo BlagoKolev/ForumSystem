@@ -24,15 +24,15 @@ namespace Forum.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Answer>()               
-                .HasOne(x => x.Comment)
-                .WithMany(x => x.Answers)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Answer>()               
+            //    .HasOne(x => x.Comment)
+            //    .WithMany(x => x.Answers)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Comment>()
-                .HasOne(x => x.Post)
-                .WithMany(x => x.Comments)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Comment>()
+            //    .HasOne(x => x.Post)
+            //    .WithMany(x => x.Comments)
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

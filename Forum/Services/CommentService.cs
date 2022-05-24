@@ -29,7 +29,7 @@ namespace Forum.Services
                 CreatorName = creator.UserName, //experimental prop
                 CreatorId = userId,
                 Creator = creator,
-                PostId = newAnswerData.PostId,
+                //PostId = newAnswerData.PostId,
                 PublishedOn = newAnswerData.PublishedOn,
                 CommentId = commentId
             };

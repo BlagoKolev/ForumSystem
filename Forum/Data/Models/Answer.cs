@@ -16,8 +16,6 @@ namespace Forum.Data.Models
         [Required]
         [MaxLength(5000)]
         public string Contents { get; set; }
-        public virtual Post Post { get; set; }
-        public int PostId { get; set; }
         public IdentityUser Creator { get; set; }
         public string CreatorName { get; set; } //new Prop experimental
         public string CreatorId { get; set; }
