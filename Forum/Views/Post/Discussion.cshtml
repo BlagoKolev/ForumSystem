@@ -75,14 +75,12 @@
             {
                 if (userId == Model.CreatorId)
                 {  //DELETE Comment
-                    <h1>@comment.Id</h1>
-
                     <span class="btn-delete" id="confirm-delete-span-@comment.Id" style="display: none">
                         <span>Are you sure you want to <b>Delete</b> your Comment?</span>
                         <a href="/Comment/Delete/?commentId=@comment.Id" class="btn btn-danger">Yes</a>
-                        <a href="#" class="btn btn-primary" onclick="confirmDelete(@comment.Id, false)">No</a>
+                        <a href="#" class="btn btn-primary" onclick="confirmDeleteComment(@comment.Id, false)">No</a>
                     </span>
-                    <button id="delete-@comment.Id" type="button" class="btn btn-danger btn-delete" onclick="confirmDelete(@comment.Id, true)">
+                    <button id="delete-@comment.Id" type="button" class="btn btn-danger btn-delete" onclick="confirmDeleteComment(@comment.Id, true)">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
 
@@ -129,9 +127,6 @@
                                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.PostId" value="@Model.Id" />
                                             <input type="hidden" asp-for="@Model.CreateCommentViewModel.IsAnswer" value="true" />
 
-                                            @*Problem to pass*@
-                                            @*<input type="hidden" onclick="location.href='@Url.Action("Comment", "CreateAnswer", new { commentId = comment.Id })'" />*@
-                                            @*<input type="hidden" asp-for="Id" />*@
                                             <input type="hidden" asp-for="Id" value="@comment.Id" />
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Publish Answer</button>
@@ -151,6 +146,17 @@
                     <div id="answers-@comment.Id" style="display:none" class="discussion-answer-container">
                         @foreach (var answer in comment.Answers)
                         {
+                            if (userId == Model.CreatorId)
+                            {  //DELETE Comment
+                                <span class="btn-delete" id="confirm-delete-answer-span-@answer.Id" style="display: none">
+                                    <span>Are you sure you want to <b>Delete</b> your Answer?</span>
+                                    <a href="/Answers/Delete/?answerId=@answer.Id" class="btn btn-danger">Yes</a>
+                                    <a href="#" class="btn btn-primary" onclick="confirmDeleteAnswer(@answer.Id, false)">No</a>
+                                </span>
+                                <button id="delete-answer-@answer.Id" type="button" class="btn btn-danger btn-delete" onclick="confirmDeleteAnswer(@answer.Id, true)">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            }
                             <div class="discussion-answer">
                                 <p class="text-white">@answer.Contents</p>
                                 <div class="comment-details">
@@ -174,6 +180,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
-        <script src="~/js/myCustomJs.js"></script>
+    <script src="~/js/myCustomJs.js"></script>
+    <script>
+        
+    </script>
 }
 

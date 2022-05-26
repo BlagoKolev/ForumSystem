@@ -12,9 +12,7 @@ function ShowAnswers(commentId) {
     }
 }
 
-
-
-function confirmDelete(commentId, isDeleteClicked) {
+function confirmDeleteComment(commentId, isDeleteClicked) {
 
     var confirmDeleteSpan = "confirm-delete-span-" + commentId;
     var deleteSpan = "delete-" + commentId;
@@ -30,6 +28,20 @@ function confirmDelete(commentId, isDeleteClicked) {
         $('#' + confirmDeleteSpan).hide();
         $('#' + showAnswersButton).show();
         $('#' + writeAnswerButton).show();
+        $('#' + deleteSpan).show();
+    }
+}
+
+function confirmDeleteAnswer(answerId, isDeleteClicked) {
+
+    var confirmDeleteSpan = "confirm-delete-answer-span-" + answerId;
+    var deleteSpan = "delete-answer-" + answerId;
+
+    if (isDeleteClicked) {
+        $('#' + deleteSpan).hide();
+        $('#' + confirmDeleteSpan).show();
+    } else {
+        $('#' + confirmDeleteSpan).hide();
         $('#' + deleteSpan).show();
     }
 }

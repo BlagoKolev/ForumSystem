@@ -1,12 +1,8 @@
 ﻿using static Forum.Data.GlobalConstants;
-using Forum.Models.Comments;
 using Forum.Models.Post;
 using Forum.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -48,7 +44,6 @@ namespace Forum.Controllers
         }
 
         [Authorize]
-   
         public async Task<IActionResult> Delete(int commentId)
         {
             int postId = await commentService.DeleteComment(commentId);

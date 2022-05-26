@@ -12,6 +12,7 @@ namespace Forum.Data
         {
             public const string PostDeleted = "Your Post was successfully deleted.";
             public const string CommentDeleted = "Your Comment was successfully deleted.";
+            public const string AnswerDeleted = "Your Answer was successfully deleted.";
         }
     }
 }

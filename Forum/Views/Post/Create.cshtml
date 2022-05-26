@@ -41,7 +41,6 @@
                 $("select#SubCategoryId").empty();
 
                 $.getJSON(`/Post/GetSubCategory?mainCategoryId=${mainCategoryId}`, function (data) {
-                    //console.log(data);
                     $.each(data, function (i, item) {
                         $("select#SubCategoryId").append(`<option value="${item.id}">${item.name}</option>`);
                     });
