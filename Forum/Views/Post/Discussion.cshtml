@@ -9,26 +9,7 @@
     <div class="discussion-content">
 
         @*Start of Modal form*@
-        @{
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" disabled />
-            }
-            else
-            {
-                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" />
-
-            }
-
-            var userId = UserManager.GetUserId(User);
-
-            if (userId == Model.CreatorId)
-            {
-                <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#deleteModal">
-                    <i class="fa-solid fa-trash-can"></i>
-                </button>
-            }
-        }
+       
 
         <form method="post" asp-controller="Comment" asp-action="CreateComment">
 
@@ -63,12 +44,32 @@
         @*End of Modal form*@
 
 
-        <div class="discussion-post">
-            <p class="text-white">@Model.Title</p>
-            <p class="text-white">@Model.Contents</p>
-            <p class="text-white published">Published by: @Model.Creator</p>
-            <p class="text-white published">Published on: @Model.PublishedOn.ToLocalTime()</p>
-        </div>
+    <div class="discussion-post">
+        @{
+            var userId = UserManager.GetUserId(User);
+
+            if (userId == Model.CreatorId)
+            {
+                <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#deleteModal">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            }
+
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" disabled />
+            }
+            else
+            {
+                <input type="button" class="btn btn-primary btn-comment" data-toggle="modal" data-target="#WriteCommentModal" value="Write Comment" />
+
+            }
+        }
+        <p class="text-white">@Model.Title</p>
+        <p class="text-white">@Model.Contents</p>
+        <p class="text-white published">Published by: @Model.Creator</p>
+        <p class="text-white published">Published on: @Model.PublishedOn.ToLocalTime()</p>
+    </div>
 
         <div class="discussion-comment-container">
             @foreach (var comment in Model.Comments)

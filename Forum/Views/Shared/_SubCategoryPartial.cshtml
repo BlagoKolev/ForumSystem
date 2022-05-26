@@ -1,40 +1,45 @@
-﻿<table class="table table-dark table-striped table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Content</th>
-            <th scope="col">Published by</th>
-            <th scope="col">Published on</th>
-        </tr>
-    </thead>
-    @foreach (var post in Model)
-    {
-        var postContent = post.Contents;
-        var postTitle = post.Title;
-
-        if (post.Title.Length > 40)
+﻿    <table class="table table-dark table-striped table-bordered ">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Content</th>
+                <th scope="col">Published by</th>
+                <th scope="col">Published on</th>
+            </tr>
+        </thead>
+        @foreach (var post in Model)
         {
-            postTitle = postContent.Substring(0, 40) + " ...";
-        }
+            var postContent = post.Contents;
+            var postTitle = post.Title;
 
-        if (post.Contents.Length > 150)
-        {
-            postContent = post.Contents.Substring(0, 150) + " ...";
-        }
-        <tr>
-            <td>
-                <a href="" class="text-white">@postTitle</a>
-            </td>
-            <td>
-                <a href="/Post/Discussion?postId=@post.Id" class="text-white">@postContent</a>
-            </td>
-            <td>
-                <a class="text-white">@post.Creator</a>
-            </td>
-            <td>
-                <a class="text-white">@post.PublishedOn</a>
-            </td>
-        </tr>
+            if (post.Title.Length > 30)
+            {
+                postTitle = postContent.Substring(0, 30) + " ...";
+            }
 
-    }
-</table>
+            if (post.Contents.Length > 70)
+            {
+                postContent = post.Contents.Substring(0, 70) + " ...";
+            }
+            <tr>
+                <td>
+                    <a href="/Post/Discussion?postId=@post.Id" class="text-white">
+                        <p>@postTitle</p>
+                    </a>
+                </td>
+                <td>
+                    <a href="/Post/Discussion?postId=@post.Id" class="text-white">
+                    <p>@postContent</p>
+                    </a>
+                </td>
+                <td>
+                    <a class="text-white">@post.Creator</a>
+                </td>
+                <td>
+                    <a class="text-white">@post.PublishedOn</a>
+                </td>
+            </tr>
+
+        }
+    </table>
+

@@ -3,5 +3,9 @@
 @{ 
     ViewData["Title"] = "Trainings - Exercises";
 }
-<h3 class="text-white"><a asp-controller="Home" asp-action="Index">Trainings</a> - Exercises </h3>
-<partial name="_SubCategoryPartial" />
+<div class="subCategory-container">
+    <h3 class="text-white"><a asp-controller="Home" asp-action="Index">Trainings</a> - Exercises </h3>
+    <div class="subCategory-container-table">
+        <partial name="_SubCategoryPartial" />
+    </div>
+</div>
