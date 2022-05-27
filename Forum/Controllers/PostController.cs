@@ -36,6 +36,8 @@ namespace Forum.Controllers
             var searchedPost = postService.GetPostById(postId);
             if (searchedPost == null)
             {
+                Response.StatusCode = 404;
+                return Redirect("/Errors/ResourceNotFound");
                // return View("Error"); TODO
                
             }
