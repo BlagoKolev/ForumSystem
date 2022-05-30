@@ -22,12 +22,18 @@ namespace Forum.Controllers
         [Authorize]
         public IActionResult CreateComment(ReadPostViewModel comment)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction();
+            }
+
             var userId = GetUserId();
             var newCommentData = comment.CreateCommentViewModel;
             var newPost = commentService.CreateComment(newCommentData, userId);
             if (newPost == null)
             {
-                //TODO
+                TempData[AlertMessageFailKey] = AlertMessageFail.ActionFailed;
+                return RedirectToAction();
             }
 
             return this.Redirect($"/Post/Discussion?postId={newCommentData.PostId}");
@@ -37,6 +43,11 @@ namespace Forum.Controllers
         [Authorize]
         public IActionResult CreateAnswer(ReadPostViewModel answer, int Id)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction();
+            }
+
             var userId = GetUserId();
             var newAnswerData = answer.CreateCommentViewModel;
             var newAnswer = commentService.CreateAnswer(newAnswerData, userId, Id);

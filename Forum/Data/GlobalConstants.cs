@@ -20,6 +20,7 @@ namespace Forum.Data
         {
             public const string CannotDeleteAnswer = "Sorry, you can not delete this Answer. Post or answer is missing.";
             public const string CannotDeleteComment = "Sorry, you can not delete this Comment. Post or Comment is missing.";
+            public const string ActionFailed = "Something went  wrong, please try again.";
         }
     }
 }

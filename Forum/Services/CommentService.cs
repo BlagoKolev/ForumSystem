@@ -56,10 +56,8 @@ namespace Forum.Services
             {
                 Contents = newCommentData.Contents,
                 CreatorId = userId,
-                //Creator = currentUserWithComment, //to be commented
                 PostId = newCommentData.PostId,
                 PublishedOn = newCommentData.PublishedOn,
-                // Comments = new HashSet<Comment>(),
             };
 
             db.Comments.Add(newComment);
