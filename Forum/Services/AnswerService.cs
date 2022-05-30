@@ -25,9 +25,11 @@ namespace Forum.Services
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
-            answer.IsDeleted = true;
-
-            await db.SaveChangesAsync();
+            if (answer != null)
+            {
+                answer.IsDeleted = true;
+                await db.SaveChangesAsync();
+            }
 
             return postId;
         }

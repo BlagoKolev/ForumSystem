@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Forum.Data
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,10 +34,17 @@
         </nav>
     </header>
     <div class="container">
-        @if (TempData.ContainsKey(Forum.Data.GlobalConstants.AlertMessageKey))
+        @if (TempData.ContainsKey(GlobalConstants.AlertMessageKey))
         {
+
             <div class="alert alert-success text-center" role="alert">
                 @TempData[Forum.Data.GlobalConstants.AlertMessageKey]
+            </div>
+        }
+        else if (TempData.ContainsKey(GlobalConstants.AlertMessageFailKey))
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                @TempData[Forum.Data.GlobalConstants.AlertMessageFailKey]
             </div>
         }
         <main role="main" class="pb-3">

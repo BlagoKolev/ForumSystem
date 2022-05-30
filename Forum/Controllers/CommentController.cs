@@ -50,8 +50,8 @@ namespace Forum.Controllers
 
             if (postId == 0)
             {
-                return BadRequest();
-                //TODO customError
+                TempData[AlertMessageFailKey] = AlertMessageFail.CannotDeleteComment;
+                return Redirect("/");
             }
             TempData[AlertMessageKey] = AlertMessage.CommentDeleted;
             return Redirect($"/Post/Discussion?postId={postId}");

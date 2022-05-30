@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Forum.Data;
 
 namespace Forum.Controllers
 {
@@ -25,8 +26,8 @@ namespace Forum.Controllers
 
             if (postId == 0)
             {
-                //TODO Custom error
-                return BadRequest();
+                TempData[AlertMessageFailKey] = AlertMessageFail.CannotDeleteAnswer;
+                return Redirect("/");
             }
 
             TempData[AlertMessageKey] = AlertMessage.AnswerDeleted;
