@@ -37,7 +37,7 @@ namespace Forum.Controllers
             if (searchedPost == null)
             {
                 Response.StatusCode = 404;
-                return Redirect("/Errors/ResourceNotFound");
+                return Redirect("/Error/404-Not-Found");
                // return View("Error"); TODO
                
             }
@@ -60,7 +60,6 @@ namespace Forum.Controllers
                 { Value = c.CategoryId.ToString(), Text = c.CategoryName })
                 .ToList();
 
-
             return View();
         }
 
@@ -71,6 +70,7 @@ namespace Forum.Controllers
                 .FirstOrDefault()
                 .SubCategories
                 .Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+
             return Json(SubCategoryList);
         }
 
