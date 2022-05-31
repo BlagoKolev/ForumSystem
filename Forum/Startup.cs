@@ -45,6 +45,7 @@ namespace Forum
                 options.Password.RequiredUniqueChars = 0;
                 options.User.RequireUniqueEmail = true;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();

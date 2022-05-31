@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Forum.Data;
 using Forum.Data.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,7 @@ namespace Forum.Helper
             var services = serviceScope.ServiceProvider;
 
             MigrateDatabase(services);
+            SeedAdministrator(services);
             SeedCategories(services);
             SeedSubCategories(services);
 
@@ -29,6 +31,38 @@ namespace Forum.Helper
         {
             var db = services.GetRequiredService<ApplicationDbContext>();
             db.Database.Migrate();
+        }
+
+        private static void SeedAdministrator(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync("Admin"))
+                {
+                    return;
+                }
+
+                var adminRole = new IdentityRole { Name = "Admin" };
+
+                await roleManager.CreateAsync(adminRole);
+
+                var adminEmail = "admin@fitnessforum.com";
+                var adminPassword = "admin";
+
+                var adminUser = new IdentityUser
+                {
+                    Email = adminEmail,
+                    UserName = adminEmail,
+                };
+
+                await userManager.CreateAsync(adminUser,adminPassword);
+                await userManager.AddToRoleAsync(adminUser, adminRole.Name);
+            })
+                .GetAwaiter()
+                .GetResult();
         }
 
         private static void SeedCategories(IServiceProvider services)
