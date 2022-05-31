@@ -20,14 +20,19 @@ namespace Forum.Helper
             var services = serviceScope.ServiceProvider;
 
             MigrateDatabase(services);
-            SeedAdministrator(services);
-            SeedCategories(services);
-            SeedSubCategories(services);
-            SeedPosts(services);
+            SeedDatabase(services);
 
             return app;
         }
 
+        private static void SeedDatabase(IServiceProvider services)
+        {
+            SeedAdministrator(services);
+            SeedCategories(services);
+            SeedSubCategories(services);
+            SeedPosts(services);
+            SeedComments(services);
+        }
         private static void MigrateDatabase(IServiceProvider services)
         {
             var db = services.GetRequiredService<ApplicationDbContext>();
@@ -59,7 +64,7 @@ namespace Forum.Helper
                     UserName = adminEmail,
                 };
 
-                await userManager.CreateAsync(adminUser,adminPassword);
+                await userManager.CreateAsync(adminUser, adminPassword);
                 await userManager.AddToRoleAsync(adminUser, adminRole.Name);
             })
                 .GetAwaiter()
@@ -421,7 +426,7 @@ namespace Forum.Helper
                     CreatorId = admin.Id,
                     SubCategoryId = 11,
                     Title = "I want to get in shape.",
-                    Contents = "Hi there, someone help me with a supplements to waight loss?",
+                    Contents = "Hi there, someone help me with a supplements to weight loss?",
                     PublishedOn = DateTime.UtcNow.ToLocalTime(),
                 });
 
@@ -459,7 +464,7 @@ namespace Forum.Helper
                     CreatorId = admin.Id,
                     SubCategoryId = 15,
                     Title = "Stromba",
-                    Contents = "What is the schema of takia Stromba?",
+                    Contents = "What is the schema of taking Stromba?",
                     PublishedOn = DateTime.UtcNow.ToLocalTime(),
                 });
                 db.Posts.Add(new Post
@@ -467,8 +472,554 @@ namespace Forum.Helper
                     CreatorId = admin.Id,
                     SubCategoryId = 15,
                     Title = "Anavar",
-                    Contents = "What is the schema of takia Anavar?",
+                    Contents = "What is the schema of taking Anavar?",
                     PublishedOn = DateTime.UtcNow.ToLocalTime(),
+                });
+
+                db.SaveChanges();
+            }
+        }
+
+        private static void SeedComments(IServiceProvider services)
+        {
+            var db = services.GetRequiredService<ApplicationDbContext>();
+            var admin = db.Users.Where(x => x.Email == "admin@fitnessforum.com").FirstOrDefault();
+
+            if (!db.Comments.Any())
+            {
+                db.Comments.Add( new Comment 
+                {
+                   PostId = 1,
+                   CreatorId = admin.Id,
+                   PublishedOn = DateTime.UtcNow,
+                   Contents = "No, it is stupid."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 1,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "No, it`s just a madness."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 1,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Only if u want to gain mass."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 2,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Make a pyramid."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 2,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Don`t take this shit man!"
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 3,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You will die young."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 3,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You will ruin your health."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 3,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You will be very big and hard but dead."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 4,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Try with slow carbohydrates."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 4,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Try with cofein and slow carbohydrates."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 4,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Forget the pills and start to eat quality food."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 5,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Try L-Carnitine and more cardio."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 5,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Fat burners + L-Carnitine + cardio."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 5,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You do not need all this staff, just eat carefully and train hard."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 6,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Depends of company that produces the product."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 6,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "2 gr per day. 30 minutes before training."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 7,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Nice food, hard trainings and good long sleep is all you need."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 7,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need L-Carnitine and Fat burner."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 8,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need Gainer protein"
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 7,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need Steroids, amino acid and a lot ot protein."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 7,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You only need good food."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 8,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need Steroids, protein and good food."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 9,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop carbohyrrates now."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 9,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Decrease carbohydrates and increase chicken protein."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 10,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "My protein."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 10,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Weider."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 10,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Animal."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 10,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Next lab."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 11,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop carbohydrates."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 11,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop midnight eating, all nights breakfast at all."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 11,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start a hard cardio training."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 11,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start heavy weight trainings."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 12,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "It is a hardest thing... ."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 12,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "It is very hard work.Start with decreasing carbohydrates to minimum."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 13,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Meat and vegetables, and must eat 4-5 times per day."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 13,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Meat, fish and vegetables. You must eat 5-7 times per day."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 14,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Go to doctor."
+                }); 
+                db.Comments.Add(new Comment
+                {
+                    PostId = 14,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop trainings."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 15,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Go to orthoped."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 15,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop to train."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 16,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop to squat."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 16,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Stop training."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 17,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Eat meat and egs and train hard."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 17,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start training your back twice per week."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 17,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start to dead-lifting."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 18,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start training your chest twice per week."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 18,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Do more base exercises."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 19,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start to do squats."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 19,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Do not train other muscle group when you train your legs."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 20,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need cardio, every day."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 20,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need cardio, every day and L-Carnitine."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 20,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You need alternate cardio and heavy-weight trainings."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 21,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "The best way is to start a lot of cardio and decrease a quantity per meal."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 21,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Give us more info, it is hard to give you advice without more information."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 22,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Depends on age, lifestyle and much more... ."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 23,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Heavy-weight trainings."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 23,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You must stop cardio."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 24,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You are too young to gain too much mass."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 24,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Start eating a lot of protein and carbohydrates."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 25,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You must give us more info about you."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 25,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Be more specific. Tell us more about you and your trainings."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 26,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Come on, i`m your guy. Gime me some contacts."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 26,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Street fitnes is great."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 26,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Street fitnes is for ladies."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 27,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You must eat everything."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 27,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You must eat meat and vegetables."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 28,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "You must take whey protein."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 28,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Better do not eat anything."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 29,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Pyramid."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 29,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Better do not take this shit."
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    PostId = 30,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Pyramid i think and then reverse pyramid."
+                });
+                db.Comments.Add(new Comment
+                {
+                    PostId = 29,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "Better do not take Anavar, it is dangerouse for your health."
                 });
 
                 db.SaveChanges();
