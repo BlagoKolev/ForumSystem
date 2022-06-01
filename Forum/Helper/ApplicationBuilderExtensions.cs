@@ -32,6 +32,7 @@ namespace Forum.Helper
             SeedSubCategories(services);
             SeedPosts(services);
             SeedComments(services);
+            SeedAnswers(services);
         }
         private static void MigrateDatabase(IServiceProvider services)
         {
@@ -201,7 +202,7 @@ namespace Forum.Helper
         private static void SeedPosts(IServiceProvider services)
         {
             var db = services.GetRequiredService<ApplicationDbContext>();
-            var admin = db.Users.Where(x => x.Email == "admin@fitnessforum.com").FirstOrDefault();
+            var admin = GetAdminId(db);
 
             if (!db.Posts.Any())
             {
@@ -483,16 +484,16 @@ namespace Forum.Helper
         private static void SeedComments(IServiceProvider services)
         {
             var db = services.GetRequiredService<ApplicationDbContext>();
-            var admin = db.Users.Where(x => x.Email == "admin@fitnessforum.com").FirstOrDefault();
+            var admin = GetAdminId(db);
 
             if (!db.Comments.Any())
             {
-                db.Comments.Add( new Comment 
+                db.Comments.Add(new Comment
                 {
-                   PostId = 1,
-                   CreatorId = admin.Id,
-                   PublishedOn = DateTime.UtcNow,
-                   Contents = "No, it is stupid."
+                    PostId = 1,
+                    CreatorId = admin.Id,
+                    PublishedOn = DateTime.UtcNow,
+                    Contents = "No, it is stupid."
                 });
                 db.Comments.Add(new Comment
                 {
@@ -759,7 +760,7 @@ namespace Forum.Helper
                     CreatorId = admin.Id,
                     PublishedOn = DateTime.UtcNow,
                     Contents = "Go to doctor."
-                }); 
+                });
                 db.Comments.Add(new Comment
                 {
                     PostId = 14,
@@ -1024,6 +1025,58 @@ namespace Forum.Helper
 
                 db.SaveChanges();
             }
+        }
+
+        private static void SeedAnswers(IServiceProvider services)
+        {
+            var db = services.GetRequiredService<ApplicationDbContext>();
+            var admin = GetAdminId(db);
+
+            if (!db.Answers.Any())
+            {
+                for (int i = 1; i < 72; i++)
+                {
+                    db.Answers.Add(new Answer
+                    {
+                        CommentId = i,
+                        PublishedOn = DateTime.UtcNow,
+                        CreatorId = admin.Id,
+                        CreatorName = admin.UserName,
+                        Contents = "Thank you!"
+                    });
+                    db.Answers.Add(new Answer
+                    {
+                        CommentId = i,
+                        PublishedOn = DateTime.UtcNow,
+                        CreatorId = admin.Id,
+                        CreatorName = admin.UserName,
+                        Contents = "Thanks a lot! It was very usefull!"
+                    });
+                    db.Answers.Add(new Answer
+                    {
+                        CommentId = i,
+                        PublishedOn = DateTime.UtcNow,
+                        CreatorId = admin.Id,
+                        CreatorName = admin.UserName,
+                        Contents = "I agree."
+                    });
+                    db.Answers.Add(new Answer
+                    {
+                        CommentId = i,
+                        PublishedOn = DateTime.UtcNow,
+                        CreatorId = admin.Id,
+                        CreatorName = admin.UserName,
+                        Contents = "I am not sure..."
+                    });
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private static IdentityUser GetAdminId(ApplicationDbContext db)
+        {
+            var admin = db.Users.Where(x => x.Email == "admin@fitnessforum.com").FirstOrDefault();
+            return admin;
         }
     }
 }
